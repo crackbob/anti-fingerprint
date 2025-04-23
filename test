@@ -1,0 +1,14 @@
+let _getChannelData = AudioBuffer.prototype.getChannelData;
+AudioBuffer.prototype.getChannelData = function (channel) {
+    let retVal = _getChannelData.apply(this, arguments);
+
+    if (channel === 0) {
+        let spoofedValue = retVal;
+        for (let i = 0; i < spoofedValue.length; i += 100) {
+            spoofedValue[i] += (Math.random() - 0.5) * 1e-7;
+        }
+        return spoofedValue;
+    }
+
+    return retVal;
+};
